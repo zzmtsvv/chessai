@@ -20,4 +20,12 @@ class ArseNet(nn.Module):
   def forward(self, x):
     return self.net(x)
   
-  model = NeuralNet()
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+def get_model():
+  optimizer = torch.optim.Adam
+  criterion = nn.BCELoss
+  batch_size = 16
+  model = NeuralNet(ArseNet, criterion, optimizer, lr=0.0001, max_epochs=1000,
+                    batch_size=batch_size, device=device)
+  return model
